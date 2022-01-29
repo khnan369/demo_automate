@@ -13,13 +13,15 @@ describe('My First Test_Cypress', function() {
         cy.wait(1000)
 
         //way 1 to select amount of product then add them to cart
+        cy.get(':nth-child(2) > .stepper-input > .increment').as('pickLocator') //Shortcut ur code to make location for miltiple time
         cy.get(':nth-child(2) > .stepper-input > .increment').click() //select item number 2 and Click on button
         cy.wait(1000) //Delay 1000ms
-        cy.get(':nth-child(2) > .stepper-input > .increment').click()
+        cy.get('@pickLocator').click()
         cy.get(':nth-child(2) > .product-action > button').click()
         cy.wait(2000)
 
         //way 2 to select amount of product then add them to cart
+        //cy.get()
         cy.get('.products').find('.product').eq(2).contains('+').click() //select item number 3 with array[2] : [0,1,2,3] and Click on first el containing '+'
         cy.wait(1000)
         cy.get('.products').find('.product').eq(2).contains('+').click()
@@ -43,8 +45,17 @@ describe('My First Test_Cypress', function() {
 
             }
           })
+        //assert if logo text is correctly displayed
+        cy.get('.brand').should('have.text','GREENKART')
+ 
+        //this is to print in logs
+        cy.get('.brand').then(function(logoelement)
+         {
+        cy.log(logoelement.text())
+ 
+       })
         
-        //fixture
+     
 
 
     })
